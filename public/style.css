@@ -130,6 +130,7 @@ footer a:hover{color:var(--blush);text-decoration:none}
 .fgrid a.social-icon:hover{transform:translateY(-2px);color:#fff;border-color:rgba(255,255,255,0.5);text-decoration:none}
 .fgrid a.social-fb:hover{background:#1877F2;border-color:#1877F2}
 .fgrid a.social-ig:hover{background:linear-gradient(135deg,#feda75 0%,#fa7e1e 25%,#d62976 50%,#962fbf 75%,#4f5bd5 100%);border-color:transparent}
+.fgrid a.social-ww:hover{background:#e8457c;border-color:#e8457c}
 
 /* Mobile */
 @media (max-width:760px){
