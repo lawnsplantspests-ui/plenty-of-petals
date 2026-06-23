@@ -3,15 +3,15 @@
 
 (function () {
   const NAV_LINKS = [
-    { href: 'weddings.html',           label: 'Weddings' },
-    { href: 'events.html',             label: 'Events' },
-    { href: 'diy-wedding-flowers.html',label: 'DIY Flowers' },
-    { href: 'gallery.html',            label: 'Gallery' },
-    { href: 'articles.html',           label: 'Planning' },
-    { href: 'contact.html',            label: 'Contact' },
+    { href: '/weddings.html',           label: 'Weddings' },
+    { href: '/events.html',             label: 'Events' },
+    { href: '/diy-wedding-flowers.html',label: 'DIY Flowers' },
+    { href: '/gallery.html',            label: 'Gallery' },
+    { href: '/articles.html',           label: 'Planning' },
+    { href: '/contact.html',            label: 'Contact' },
   ];
 
-  const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+  const currentFile = '/' + (window.location.pathname.split('/').pop() || 'index.html');
 
   const navHtml = NAV_LINKS.map(function (l) {
     var active = currentFile === l.href ? ' class="active"' : '';
@@ -19,7 +19,7 @@
   }).join('\n');
 
   const header = '<header class="site"><div class="nav">\n' +
-    '<a href="index.html" class="brand">Plenty of Petals<small>Wedding &amp; Event Florist &middot; Harrisburg, PA</small></a>\n' +
+    '<a href="/" class="brand">Plenty of Petals<small>Wedding &amp; Event Florist &middot; Harrisburg, PA</small></a>\n' +
     '<button class="menutoggle" aria-label="Menu" onclick="document.getElementById(\'nav\').classList.toggle(\'open\')">&#9776;</button>\n' +
     '<nav class="navlinks" id="nav">\n' + navHtml + '\n' +
     '<a href="tel:7176081401" class="callbtn">Call 717-608-1401</a>\n' +
@@ -37,17 +37,17 @@
 '</div>\n' +
 '<div>\n' +
 '<h4>Services</h4>\n' +
-'<a href="weddings.html">Wedding Flowers</a>\n' +
-'<a href="events.html">Event Florals</a>\n' +
-'<a href="diy-wedding-flowers.html">DIY Wedding Flowers</a>\n' +
-'<a href="gallery.html">Gallery</a>\n' +
+'<a href="/weddings.html">Wedding Flowers</a>\n' +
+'<a href="/events.html">Event Florals</a>\n' +
+'<a href="/diy-wedding-flowers.html">DIY Wedding Flowers</a>\n' +
+'<a href="/gallery.html">Gallery</a>\n' +
 '</div>\n' +
 '<div>\n' +
 '<h4>Planning</h4>\n' +
-'<a href="articles.html">Planning Articles</a>\n' +
-'<a href="contact.html">Book a Consultation</a>\n' +
-'<a href="contact.html">Contact</a>\n' +
-'<a href="privacy.html">Privacy</a>\n' +
+'<a href="/articles.html">Planning Articles</a>\n' +
+'<a href="/contact.html">Book a Consultation</a>\n' +
+'<a href="/contact.html">Contact</a>\n' +
+'<a href="/privacy.html">Privacy</a>\n' +
 '</div>\n' +
 '<div>\n' +
 '<h4>Follow &amp; reviews</h4>\n' +
