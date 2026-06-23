@@ -21,7 +21,9 @@ img{max-width:100%;display:block}
 /* Header */
 header.site{position:sticky;top:0;z-index:50;background:rgba(251,246,239,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav{max-width:var(--maxw);margin:0 auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:500;color:var(--rose-deep);line-height:1;display:flex;flex-direction:column;gap:3px}
+.brand{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:500;color:var(--rose-deep);line-height:1;display:flex;align-items:center;gap:10px}
+.brand-logo{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.brand-text{display:flex;flex-direction:column;gap:3px}
 .brand small{font-family:'Inter',sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-deep)}
 .brand:hover{text-decoration:none;color:var(--rose)}
 .navlinks{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
