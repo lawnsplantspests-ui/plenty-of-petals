@@ -2,6 +2,11 @@
 // Usage: <script src="components.js"></script>
 
 (function () {
+  // Add favicon globally
+  document.head.insertAdjacentHTML('beforeend',
+    '<link rel="icon" type="image/jpeg" href="/images/pop-logo.jpeg">' +
+    '<link rel="apple-touch-icon" href="/images/pop-logo.jpeg">');
+
   const NAV_LINKS = [
     { href: '/weddings.html',           label: 'Weddings' },
     { href: '/events.html',             label: 'Events' },
