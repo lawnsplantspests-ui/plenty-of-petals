@@ -1,2 +1,2 @@
-# Cloudflare Workers handles bare-domain to www at the DNS / Redirect Rules
-# level when the custom domain is wired up. No app-level rules needed.
+# Force the www hostname to the apex (non-www) so Google sees one canonical site.
+https://www.plentyofpetalspa.com/* https://plentyofpetalspa.com/:splat 301
