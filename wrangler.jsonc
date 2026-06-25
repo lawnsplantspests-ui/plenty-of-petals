@@ -1,12 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "petals",
-  "main": "src/index.js",
   "compatibility_date": "2025-01-01",
   "assets": {
     "directory": "./public",
-    "not_found_handling": "404-page",
-    "binding": "ASSETS",
-    "run_worker_first": true
+    "not_found_handling": "404-page"
   }
 }
