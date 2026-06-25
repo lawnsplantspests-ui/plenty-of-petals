@@ -2,6 +2,19 @@
 // Usage: <script src="components.js"></script>
 
 (function () {
+  // Google Analytics 4 (gtag.js) — injected on every page
+  (function () {
+    var id = 'G-H0XHH6SBP1';
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', id);
+  })();
+
   // Add favicon globally
   document.head.insertAdjacentHTML('beforeend',
     '<link rel="icon" type="image/jpeg" href="/images/pop-logo.jpeg">' +
