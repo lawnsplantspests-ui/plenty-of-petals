@@ -109,9 +109,8 @@
 <p style="margin-bottom:0">Thank you &mdash; we'll be in touch within a day to set up your free consultation. Can't wait to hear about your day! In the meantime, feel free to browse the <a href="gallery.html">gallery</a> for inspiration.</p>
 </div>
 <script>
-// Web3Forms access key — get a free key at https://web3forms.com (enter plentyofpetals@hotmail.com).
-// Until a real key is pasted below, the form falls back to opening the visitor's email app.
-var WEB3FORMS_KEY = 'YOUR_ACCESS_KEY_HERE';
+// Web3Forms access key (tied to plentyofpetals@hotmail.com — safe to be public, it's an email alias not a secret)
+var WEB3FORMS_KEY = 'fa95a736-f9d1-40f5-8eb3-cf79be822fb5';
 function petalsMailtoFallback(data){
   var body = encodeURIComponent('Consultation request from plentyofpetalspa.com\n\nName(s): ' + data.get('name') + '\nPhone: ' + data.get('phone') + '\nEmail: ' + data.get('email') + '\nEvent date: ' + (data.get('event_date') || '(not sure yet)') + '\nType: ' + data.get('event_type') + '\nVenue/town: ' + (data.get('venue') || '(not sure yet)') + '\n\nVision:\n' + (data.get('message') || '(none yet)'));
   window.location.href = 'mailto:plentyofpetals@hotmail.com?subject=' + encodeURIComponent('Consultation request — ' + data.get('name')) + '&body=' + body;
