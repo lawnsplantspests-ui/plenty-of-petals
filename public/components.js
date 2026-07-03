@@ -63,6 +63,7 @@
 '<div>\n' +
 '<h4>Planning</h4>\n' +
 '<a href="/articles.html">Planning Articles</a>\n' +
+'<a href="/service-areas.html">Areas We Serve</a>\n' +
 '<a href="/contact.html">Book a Consultation</a>\n' +
 '<a href="/contact.html">Contact</a>\n' +
 '<a href="/privacy.html">Privacy</a>\n' +

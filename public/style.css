@@ -145,3 +145,15 @@ footer a:hover{color:var(--blush);text-decoration:none}
   section{padding:56px 0}
   .ctastrip{padding:40px 24px}
 }
+
+/* Consultation form */
+.cform{max-width:680px;display:grid;gap:16px;margin-top:8px}
+.cform-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cform label{display:block;font-weight:600;font-size:.88rem;margin-bottom:5px;color:var(--rose-deep)}
+.cform input,.cform select,.cform textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);font:inherit;color:var(--ink)}
+.cform input:focus,.cform select:focus,.cform textarea:focus{outline:none;border-color:var(--rose)}
+.cform textarea{min-height:120px;resize:vertical}
+.cform button{justify-self:start}
+.cform-note{font-size:.85rem;color:var(--stone)}
+.cform-success{padding:24px;border:2px solid var(--sage-deep);border-radius:12px;background:var(--paper)}
+@media(max-width:640px){.cform-row{grid-template-columns:1fr}}

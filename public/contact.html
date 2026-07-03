@@ -72,6 +72,76 @@
 </div>
 </section>
 
+<section>
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow">Start the conversation</div>
+<h2>Request your free consultation.</h2>
+<p>Tell us a little about your day and we'll reach out to set up a time to talk. No pressure, no obligation &mdash; and no detail is too undecided to start.</p>
+</div>
+<form class="cform" id="petals-form" onsubmit="return submitPetalsForm(event)">
+<div class="cform-row">
+<div><label for="pf-name">Your name(s)</label><input id="pf-name" name="name" type="text" required autocomplete="name" placeholder="Jordan &amp; Sam"></div>
+<div><label for="pf-phone">Phone</label><input id="pf-phone" name="phone" type="tel" required autocomplete="tel" placeholder="717-555-0123"></div>
+</div>
+<div class="cform-row">
+<div><label for="pf-email">Email</label><input id="pf-email" name="email" type="email" required autocomplete="email"></div>
+<div><label for="pf-date">Event date (or best guess)</label><input id="pf-date" name="event_date" type="text" placeholder="October 2027, or &quot;still deciding&quot;"></div>
+</div>
+<div class="cform-row">
+<div><label for="pf-type">What are you planning?</label>
+<select id="pf-type" name="event_type" required>
+<option value="">&mdash; Pick one &mdash;</option>
+<option>Wedding &mdash; full service</option>
+<option>Wedding &mdash; DIY / bulk flowers</option>
+<option>Event or party</option>
+<option>Not sure yet</option>
+</select></div>
+<div><label for="pf-venue">Venue or town (if known)</label><input id="pf-venue" name="venue" type="text" placeholder="Venue name, or just the town"></div>
+</div>
+<div><label for="pf-vision">Tell us about your vision (optional)</label><textarea id="pf-vision" name="message" placeholder="Colors, styles, inspiration, budget range &mdash; whatever you have so far. It's okay if it's just &quot;we like peonies.&quot;"></textarea></div>
+<input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+<button type="submit" class="btn">Request my free consultation &rarr;</button>
+<p class="cform-note">We typically reply within a day. Elyse reads every message personally.</p>
+</form>
+<div class="cform-success" id="pf-success" style="display:none">
+<h3 style="margin-top:0">&#10003; Request received!</h3>
+<p style="margin-bottom:0">Thank you &mdash; we'll be in touch within a day to set up your free consultation. Can't wait to hear about your day! In the meantime, feel free to browse the <a href="gallery.html">gallery</a> for inspiration.</p>
+</div>
+<script>
+// Web3Forms access key — get a free key at https://web3forms.com (enter plentyofpetals@hotmail.com).
+// Until a real key is pasted below, the form falls back to opening the visitor's email app.
+var WEB3FORMS_KEY = 'YOUR_ACCESS_KEY_HERE';
+function petalsMailtoFallback(data){
+  var body = encodeURIComponent('Consultation request from plentyofpetalspa.com\n\nName(s): ' + data.get('name') + '\nPhone: ' + data.get('phone') + '\nEmail: ' + data.get('email') + '\nEvent date: ' + (data.get('event_date') || '(not sure yet)') + '\nType: ' + data.get('event_type') + '\nVenue/town: ' + (data.get('venue') || '(not sure yet)') + '\n\nVision:\n' + (data.get('message') || '(none yet)'));
+  window.location.href = 'mailto:plentyofpetals@hotmail.com?subject=' + encodeURIComponent('Consultation request — ' + data.get('name')) + '&body=' + body;
+}
+function submitPetalsForm(e){
+  e.preventDefault();
+  var f = e.target, data = new FormData(f);
+  if (WEB3FORMS_KEY.indexOf('YOUR_') === 0) { petalsMailtoFallback(data); return false; }
+  var btn = f.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  data.append('access_key', WEB3FORMS_KEY);
+  data.append('subject', 'Consultation request — ' + data.get('name'));
+  data.append('from_name', 'plentyofpetalspa.com consultation form');
+  fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res.success) { throw new Error('send failed'); }
+      f.style.display = 'none';
+      document.getElementById('pf-success').style.display = 'block';
+    })
+    .catch(function(){
+      btn.disabled = false; btn.textContent = 'Request my free consultation →';
+      petalsMailtoFallback(data);
+    });
+  return false;
+}
+</script>
+</div>
+</section>
+
 <section class="band">
 <div class="wrap">
 <div class="sec-head">
