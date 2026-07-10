@@ -26,6 +26,7 @@
     { href: '/diy-wedding-flowers.html',label: 'DIY Flowers' },
     { href: '/gallery.html',            label: 'Gallery' },
     { href: '/articles.html',           label: 'Planning' },
+    { href: '/faq.html',                label: 'FAQ' },
     { href: '/contact.html',            label: 'Contact' },
   ];
 
@@ -63,6 +64,7 @@
 '<div>\n' +
 '<h4>Planning</h4>\n' +
 '<a href="/articles.html">Planning Articles</a>\n' +
+'<a href="/faq.html">FAQ</a>\n' +
 '<a href="/service-areas.html">Areas We Serve</a>\n' +
 '<a href="/contact.html">Book a Consultation</a>\n' +
 '<a href="/contact.html">Contact</a>\n' +
