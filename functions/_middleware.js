@@ -10,7 +10,7 @@ const NTFY_TOPIC = "pop-visits-5hwjbgnl8r";
 const BOT_RE = /bot|crawl|spider|slurp|bing|yandex|duckduck|baidu|facebookexternalhit|whatsapp|telegram|preview|curl|wget|python|java|go-http|headless|lighthouse|pingdom|uptime|monitor|scan|validator/i;
 
 export async function onRequest(context) {
-  const { request, next, waitUntil } = context;
+  const request = context.request;
   const url = new URL(request.url);
 
   // One-time link Devon & Elyse open on their own devices so their
@@ -26,21 +26,30 @@ export async function onRequest(context) {
     });
   }
 
-  const response = await next();
+  const response = await context.next();
 
   try {
     const contentType = response.headers.get("content-type") || "";
-    const userAgent = request.headers.get("user-agent") || "";
-    const cookies = request.headers.get("cookie") || "";
     if (
       request.method === "GET" &&
       response.status === 200 &&
-      contentType.includes("text/html") &&
-      userAgent &&
-      !BOT_RE.test(userAgent) &&
-      !cookies.includes("pop_owner=1")
+      contentType.includes("text/html")
     ) {
-      waitUntil(notifyVisit(request, url));
+      const userAgent = request.headers.get("user-agent") || "";
+      const cookies = request.headers.get("cookie") || "";
+      let reason = "queued";
+      if (!userAgent || BOT_RE.test(userAgent)) reason = "bot";
+      else if (cookies.includes("pop_owner=1")) reason = "owner";
+
+      // NOTE: call waitUntil on context — destructuring it detaches
+      // the method from its object and it silently fails
+      if (reason === "queued") context.waitUntil(notifyVisit(request, url));
+
+      // Debug header (visible in browser dev tools / curl -I):
+      // says whether this page view queued a ping and why not if not
+      const tagged = new Response(response.body, response);
+      tagged.headers.set("x-visit-ping", reason);
+      return tagged;
     }
   } catch (e) {
     // Notification problems must never affect serving the site
@@ -50,20 +59,30 @@ export async function onRequest(context) {
 }
 
 async function notifyVisit(request, url) {
+  // Dedupe: one notification per visitor per 30 minutes, so a person
+  // browsing several pages doesn't fire a ping for every click.
+  // If the cache misbehaves, send anyway rather than staying silent.
+  let alreadyPinged = false;
   try {
-    // One notification per visitor per 30 minutes, so a person browsing
-    // several pages doesn't fire a ping for every click
     const ip = request.headers.get("cf-connecting-ip") || "unknown";
     const cache = caches.default;
     const dedupeKey = new Request(
       "https://visit-dedupe.pop-internal.example/" + encodeURIComponent(ip)
     );
-    if (await cache.match(dedupeKey)) return;
-    await cache.put(
-      dedupeKey,
-      new Response("1", { headers: { "Cache-Control": "max-age=1800" } })
-    );
+    if (await cache.match(dedupeKey)) {
+      alreadyPinged = true;
+    } else {
+      await cache.put(
+        dedupeKey,
+        new Response("1", { headers: { "Cache-Control": "max-age=1800" } })
+      );
+    }
+  } catch (e) {
+    // fall through and send
+  }
+  if (alreadyPinged) return;
 
+  try {
     const cf = request.cf || {};
     const city = cf.city || "Somewhere";
     const region = cf.regionCode || cf.region || "";
