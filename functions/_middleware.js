@@ -46,9 +46,9 @@ export async function onRequest(context) {
       if (reason === "queued") {
         if (url.searchParams.has("pingtest")) {
           // Test mode: send synchronously, skip dedupe, report outcome
-          reason = await notifyVisit(request, url, true);
+          reason = await notifyVisit(request, url, context.env, true);
         } else {
-          context.waitUntil(notifyVisit(request, url, false));
+          context.waitUntil(notifyVisit(request, url, context.env, false));
         }
       }
 
@@ -67,7 +67,7 @@ export async function onRequest(context) {
 
 // Returns an outcome string (also used as the x-visit-ping header in
 // test mode): "sent" | "deduped" | "send-failed-<status>" | "error-..."
-async function notifyVisit(request, url, isTest) {
+async function notifyVisit(request, url, env, isTest) {
   // Dedupe: one notification per visitor per 30 minutes, so a person
   // browsing several pages doesn't fire a ping for every click.
   // If the cache misbehaves, send anyway rather than staying silent.
@@ -97,12 +97,19 @@ async function notifyVisit(request, url, isTest) {
         : `${city}, ${country}`;
     const page = url.pathname === "/" ? "home page" : url.pathname;
 
+    // Authenticate with the family ntfy account (stored as a Cloudflare
+    // secret) so rate limits apply per-account, not per shared
+    // Cloudflare egress IP — unauthenticated sends mostly 429
+    const headers = {
+      Title: "Plenty of Petals site visitor",
+      Tags: "cherry_blossom",
+    };
+    if (env && env.NTFY_TOKEN) {
+      headers.Authorization = "Bearer " + env.NTFY_TOKEN;
+    }
     const resp = await fetch("https://ntfy.sh/" + NTFY_TOPIC, {
       method: "POST",
-      headers: {
-        Title: "Plenty of Petals site visitor",
-        Tags: "cherry_blossom",
-      },
+      headers,
       body: `Someone from ${place} is viewing the site (${page})`,
     });
     if (!resp.ok) return "send-failed-" + resp.status;
