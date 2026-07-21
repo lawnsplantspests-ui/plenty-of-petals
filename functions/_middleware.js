@@ -56,6 +56,13 @@ export async function onRequest(context) {
       // says whether this page view queued a ping and why not if not
       const tagged = new Response(response.body, response);
       tagged.headers.set("x-visit-ping", reason);
+      // Diagnostic: does the secret actually reach this runtime?
+      // Reports length only, never the token value.
+      const tl =
+        context.env && context.env.NTFY_TOKEN
+          ? String(context.env.NTFY_TOKEN).trim().length
+          : 0;
+      tagged.headers.set("x-ntfy-token-len", String(tl));
       return tagged;
     }
   } catch (e) {
