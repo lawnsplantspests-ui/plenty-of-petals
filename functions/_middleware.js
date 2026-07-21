@@ -1,10 +1,11 @@
 // Visitor notifications for plentyofpetalspa.com
 // Pages Function middleware: serves the site as normal, and pings
-// Elyse's phone (via ntfy.sh) when a real person views a page.
+// Elyse's phone (via a Telegram bot) when a real person views a page.
 // City/state comes from Cloudflare's built-in geolocation — no
 // visitor data is stored anywhere.
-
-const NTFY_TOPIC = "pop-visits-5hwjbgnl8r";
+// Telegram is used instead of ntfy because free ntfy.sh rate-limits by
+// IP and blocks Cloudflare's shared egress IPs; Telegram does not.
+// Credentials live in the TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID secrets.
 
 // Skip search engines, crawlers, link previews, and monitoring tools
 const BOT_RE = /bot|crawl|spider|slurp|bing|yandex|duckduck|baidu|facebookexternalhit|whatsapp|telegram|preview|curl|wget|python|java|go-http|headless|lighthouse|pingdom|uptime|monitor|scan|validator/i;
@@ -56,13 +57,12 @@ export async function onRequest(context) {
       // says whether this page view queued a ping and why not if not
       const tagged = new Response(response.body, response);
       tagged.headers.set("x-visit-ping", reason);
-      // Diagnostic: does the secret actually reach this runtime?
-      // Reports length only, never the token value.
-      const tl =
-        context.env && context.env.NTFY_TOKEN
-          ? String(context.env.NTFY_TOKEN).trim().length
-          : 0;
-      tagged.headers.set("x-ntfy-token-len", String(tl));
+      // Diagnostic: are the Telegram secrets present in this runtime?
+      // "tc" = both, "t-" = token only, "-c" = chat only, "--" = none.
+      const cfg =
+        (context.env && context.env.TELEGRAM_BOT_TOKEN ? "t" : "-") +
+        (context.env && context.env.TELEGRAM_CHAT_ID ? "c" : "-");
+      tagged.headers.set("x-tg-config", cfg);
       return tagged;
     }
   } catch (e) {
@@ -104,22 +104,22 @@ async function notifyVisit(request, url, env, isTest) {
         : `${city}, ${country}`;
     const page = url.pathname === "/" ? "home page" : url.pathname;
 
-    // Authenticate with the family ntfy account (stored as a Cloudflare
-    // secret) so rate limits apply per-account, not per shared
-    // Cloudflare egress IP — unauthenticated sends mostly 429
-    const headers = {
-      Title: "Plenty of Petals site visitor",
-      Tags: "cherry_blossom",
-    };
-    const token = env && env.NTFY_TOKEN ? String(env.NTFY_TOKEN).trim() : "";
-    if (token) {
-      headers.Authorization = "Bearer " + token;
-    }
-    const resp = await fetch("https://ntfy.sh/" + NTFY_TOPIC, {
-      method: "POST",
-      headers,
-      body: `Someone from ${place} is viewing the site (${page})`,
-    });
+    // Send via the Telegram Bot API (reliable from Cloudflare's shared
+    // egress IPs). Secrets: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID.
+    const botToken = env && env.TELEGRAM_BOT_TOKEN ? String(env.TELEGRAM_BOT_TOKEN).trim() : "";
+    const chatId = env && env.TELEGRAM_CHAT_ID ? String(env.TELEGRAM_CHAT_ID).trim() : "";
+    if (!botToken || !chatId) return "no-config";
+    const resp = await fetch(
+      "https://api.telegram.org/bot" + botToken + "/sendMessage",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: `🌸 Plenty of Petals\nSomeone from ${place} is viewing the site (${page})`,
+        }),
+      }
+    );
     if (!resp.ok) return "send-failed-" + resp.status;
 
     // Only start the 30-min quiet window after a successful send,
