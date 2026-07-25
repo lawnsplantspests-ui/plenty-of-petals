@@ -21,13 +21,13 @@
     '<link rel="apple-touch-icon" href="/images/pop-logo.jpeg">');
 
   const NAV_LINKS = [
-    { href: '/weddings.html',           label: 'Weddings' },
-    { href: '/events.html',             label: 'Events' },
-    { href: '/diy-wedding-flowers.html',label: 'DIY Flowers' },
-    { href: '/gallery.html',            label: 'Gallery' },
-    { href: '/articles.html',           label: 'Planning' },
-    { href: '/faq.html',                label: 'FAQ' },
-    { href: '/contact.html',            label: 'Contact' },
+    { href: '/weddings',           label: 'Weddings' },
+    { href: '/events',             label: 'Events' },
+    { href: '/diy-wedding-flowers',label: 'DIY Flowers' },
+    { href: '/gallery',            label: 'Gallery' },
+    { href: '/articles',           label: 'Planning' },
+    { href: '/faq',                label: 'FAQ' },
+    { href: '/contact',            label: 'Contact' },
   ];
 
   const currentFile = '/' + (window.location.pathname.split('/').pop() || 'index.html');
@@ -56,19 +56,19 @@
 '</div>\n' +
 '<div>\n' +
 '<h4>Services</h4>\n' +
-'<a href="/weddings.html">Wedding Flowers</a>\n' +
-'<a href="/events.html">Event Florals</a>\n' +
-'<a href="/diy-wedding-flowers.html">DIY Wedding Flowers</a>\n' +
-'<a href="/gallery.html">Gallery</a>\n' +
+'<a href="/weddings">Wedding Flowers</a>\n' +
+'<a href="/events">Event Florals</a>\n' +
+'<a href="/diy-wedding-flowers">DIY Wedding Flowers</a>\n' +
+'<a href="/gallery">Gallery</a>\n' +
 '</div>\n' +
 '<div>\n' +
 '<h4>Planning</h4>\n' +
-'<a href="/articles.html">Planning Articles</a>\n' +
-'<a href="/faq.html">FAQ</a>\n' +
-'<a href="/service-areas.html">Areas We Serve</a>\n' +
-'<a href="/contact.html">Book a Consultation</a>\n' +
-'<a href="/contact.html">Contact</a>\n' +
-'<a href="/privacy.html">Privacy</a>\n' +
+'<a href="/articles">Planning Articles</a>\n' +
+'<a href="/faq">FAQ</a>\n' +
+'<a href="/service-areas">Areas We Serve</a>\n' +
+'<a href="/contact">Book a Consultation</a>\n' +
+'<a href="/contact">Contact</a>\n' +
+'<a href="/privacy">Privacy</a>\n' +
 '</div>\n' +
 '<div>\n' +
 '<h4>Follow &amp; reviews</h4>\n' +
