@@ -16,7 +16,11 @@ const BOT_RE = /bot|crawl|spider|slurp|bing|yandex|duckduck|baidu|facebookextern
 // visitor's network name). Residential ISPs (Comcast, Verizon, Spectrum,
 // AT&T, T-Mobile, Frontier, etc.) never match these, so real local
 // visitors are unaffected.
-const HOSTING_RE = /google|amazon|\baws\b|microsoft|azure|digital\s?ocean|oracle|\bovh\b|hetzner|linode|akamai|fastly|cloudflare|facebook|meta platforms|censys|shodan|palo alto|leaseweb|contabo|vultr|scaleway|alibaba|tencent|huawei|datacamp|\bm247\b|choopa|quadranet|hostwinds|gcore|stackpath|sucuri|bytedance|internet archive|data\s?cent|colocat|hosting|\bcloud\b|\bvps\b|\bllc\b\s*host/i;
+const HOSTING_RE = /google|amazon|\baws\b|microsoft|azure|digital\s?ocean|oracle|\bovh\b|hetzner|linode|akamai|fastly|cloudflare|facebook|meta platforms|censys|shodan|palo alto|leaseweb|contabo|vultr|scaleway|alibaba|tencent|huawei|datacamp|\bm247\b|choopa|quadranet|hostwinds|gcore|stackpath|sucuri|bytedance|internet archive|data\s?cent|colocat|hosting|\bcloud\b|\bvps\b|\bllc\b\s*host|\bservers?\b|\bseo\b|cogent|\bquay\b|\bpte\b|\bltd\b|\buab\b|\bidc\b|zenlayer|psychz|nforce|worldstream|constant company|dedicated|proxy|\bvpn\b|scraper|scraping|crawler/i;
+
+// Real customers for a Central PA florist are in the US. Overseas
+// "visitors" are scrapers/bots essentially 100% of the time.
+const NOTIFY_COUNTRY = "US";
 
 // Turn a URL path into a friendly page name, e.g.
 // "/weddings" -> "Weddings page", "/" -> "Home page".
@@ -103,9 +107,11 @@ export async function onRequest(context) {
       const userAgent = request.headers.get("user-agent") || "";
       const cookies = request.headers.get("cookie") || "";
       const org = (request.cf && request.cf.asOrganization) || "";
+      const country = (request.cf && request.cf.country) || "";
       let reason = "queued";
       if (!userAgent || BOT_RE.test(userAgent)) reason = "bot";
       else if (org && HOSTING_RE.test(org)) reason = "datacenter";
+      else if (country && country !== NOTIFY_COUNTRY) reason = "overseas";
       else if (cookies.includes("pop_owner=1")) reason = "owner";
 
       // NOTE: call waitUntil on context — destructuring it detaches
