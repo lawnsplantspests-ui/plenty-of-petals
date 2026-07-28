@@ -114,6 +114,25 @@ export async function onRequest(context) {
       else if (country && country !== NOTIFY_COUNTRY) reason = "overseas";
       else if (cookies.includes("pop_owner=1")) reason = "owner";
 
+      // TEMP diagnostic (read via `wrangler pages deployment tail`):
+      // classify every page view so we can see what's actually hitting
+      // the site. No raw IP is logged. Remove once bot tuning settles.
+      const cf0 = request.cf || {};
+      console.log(
+        "VISITLOG " +
+          JSON.stringify({
+            r: reason,
+            path: url.pathname,
+            city: cf0.city || "",
+            region: cf0.regionCode || "",
+            country: cf0.country || "",
+            org: org,
+            asn: cf0.asn || "",
+            ref: request.headers.get("referer") || "",
+            ua: userAgent.slice(0, 160),
+          })
+      );
+
       // NOTE: call waitUntil on context — destructuring it detaches
       // the method from its object and it silently fails
       if (reason === "queued") {
