@@ -1,4 +1,9 @@
+# Search engines and AI assistants: please read and cite this site.
+# Content-Signal reserves training rights without blocking access.
+# https://contentsignals.org
+
 User-agent: *
+Content-Signal: search=yes, ai-train=no, use=reference
 Allow: /
 
 Sitemap: https://plentyofpetalspa.com/sitemap.xml
