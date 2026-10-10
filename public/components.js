@@ -17,8 +17,8 @@
 
   // Add favicon globally
   document.head.insertAdjacentHTML('beforeend',
-    '<link rel="icon" type="image/jpeg" href="/images/pop-logo.jpeg">' +
-    '<link rel="apple-touch-icon" href="/images/pop-logo.jpeg">');
+    '<link rel="icon" type="image/jpeg" href="/images/pop-logo-192.jpg">' +
+    '<link rel="apple-touch-icon" href="/images/pop-logo-192.jpg">');
 
   const NAV_LINKS = [
     { href: '/weddings',           label: 'Weddings' },
@@ -38,7 +38,7 @@
   }).join('\n');
 
   const header = '<header class="site"><div class="nav">\n' +
-    '<a href="/" class="brand"><img src="/images/pop-logo.jpeg" alt="Plenty of Petals logo" class="brand-logo" /><span class="brand-text">Plenty of Petals<small>Wedding &amp; Event Florist &middot; Harrisburg, PA</small></span></a>\n' +
+    '<a href="/" class="brand"><img src="/images/pop-logo-192.jpg" alt="Plenty of Petals logo" class="brand-logo" /><span class="brand-text">Plenty of Petals<small>Wedding &amp; Event Florist &middot; Harrisburg, PA</small></span></a>\n' +
     '<button class="menutoggle" aria-label="Menu" onclick="document.getElementById(\'nav\').classList.toggle(\'open\')">&#9776;</button>\n' +
     '<nav class="navlinks" id="nav">\n' + navHtml + '\n' +
     '<a href="tel:7176081401" class="callbtn">Call 717-608-1401</a>\n' +
