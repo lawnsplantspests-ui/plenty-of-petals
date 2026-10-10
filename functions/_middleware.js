@@ -114,47 +114,11 @@ export async function onRequest(context) {
       else if (country && country !== NOTIFY_COUNTRY) reason = "overseas";
       else if (cookies.includes("pop_owner=1")) reason = "owner";
 
-      // TEMP diagnostic (read via `wrangler pages deployment tail`):
-      // classify every page view so we can see what's actually hitting
-      // the site. No raw IP is logged. Remove once bot tuning settles.
-      const cf0 = request.cf || {};
-      console.log(
-        "VISITLOG " +
-          JSON.stringify({
-            r: reason,
-            path: url.pathname,
-            city: cf0.city || "",
-            region: cf0.regionCode || "",
-            country: cf0.country || "",
-            org: org,
-            asn: cf0.asn || "",
-            ref: request.headers.get("referer") || "",
-            ua: userAgent.slice(0, 160),
-          })
-      );
-
       // NOTE: call waitUntil on context — destructuring it detaches
       // the method from its object and it silently fails
       if (reason === "queued") {
-        if (url.searchParams.has("pingtest")) {
-          // Test mode: send synchronously, skip dedupe, report outcome
-          reason = await notifyVisit(request, url, context.env, true);
-        } else {
-          context.waitUntil(notifyVisit(request, url, context.env, false));
-        }
+        context.waitUntil(notifyVisit(request, url, context.env));
       }
-
-      // Debug header (visible in browser dev tools / curl -I):
-      // says whether this page view queued a ping and why not if not
-      const tagged = new Response(response.body, response);
-      tagged.headers.set("x-visit-ping", reason);
-      // Diagnostic: are the Telegram secrets present in this runtime?
-      // "tc" = both, "t-" = token only, "-c" = chat only, "--" = none.
-      const cfg =
-        (context.env && context.env.TELEGRAM_BOT_TOKEN ? "t" : "-") +
-        (context.env && context.env.TELEGRAM_CHAT_ID ? "c" : "-");
-      tagged.headers.set("x-tg-config", cfg);
-      return tagged;
     }
   } catch (e) {
     // Notification problems must never affect serving the site
@@ -163,9 +127,9 @@ export async function onRequest(context) {
   return response;
 }
 
-// Returns an outcome string (also used as the x-visit-ping header in
-// test mode): "sent" | "deduped" | "send-failed-<status>" | "error-..."
-async function notifyVisit(request, url, env, isTest) {
+// Returns an outcome string:
+// "sent" | "deduped" | "send-failed-<status>" | "error-..."
+async function notifyVisit(request, url, env) {
   // Dedupe: one notification per visitor per 30 minutes, so a person
   // browsing several pages doesn't fire a ping for every click.
   // If the cache misbehaves, send anyway rather than staying silent.
@@ -174,12 +138,10 @@ async function notifyVisit(request, url, env, isTest) {
   const dedupeKey = new Request(
     "https://visit-dedupe.pop-internal.example/" + encodeURIComponent(ip)
   );
-  if (!isTest) {
-    try {
-      if (await cache.match(dedupeKey)) return "deduped";
-    } catch (e) {
-      // fall through and send
-    }
+  try {
+    if (await cache.match(dedupeKey)) return "deduped";
+  } catch (e) {
+    // fall through and send
   }
 
   try {
@@ -231,14 +193,12 @@ async function notifyVisit(request, url, env, isTest) {
 
     // Only start the 30-min quiet window after a successful send,
     // so a failed send doesn't silence the next real visit
-    if (!isTest) {
-      try {
-        await cache.put(
-          dedupeKey,
-          new Response("1", { headers: { "Cache-Control": "max-age=1800" } })
-        );
-      } catch (e) {}
-    }
+    try {
+      await cache.put(
+        dedupeKey,
+        new Response("1", { headers: { "Cache-Control": "max-age=1800" } })
+      );
+    } catch (e) {}
     return "sent";
   } catch (e) {
     const msg = e && e.message ? String(e.message) : "unknown";
