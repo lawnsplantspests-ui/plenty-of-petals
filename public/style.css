@@ -14,7 +14,7 @@ h3{font-size:1.35rem;font-weight:600;color:var(--ink)}
 h4{font-size:.92rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-deep)}
 a{color:var(--rose);text-decoration:none;transition:color .2s}
 a:hover{color:var(--rose-deep);text-decoration:underline;text-underline-offset:3px}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 .eyebrow{font-family:'Inter',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:18px}
 
@@ -38,6 +38,8 @@ header.site{position:sticky;top:0;z-index:50;background:rgba(251,246,239,.95);ba
 .hero .wrap{max-width:780px}
 .hero h1{margin-bottom:22px}
 .hero h1 em{font-style:italic;color:var(--rose)}
+.hero-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:640px;margin:44px auto 0}
+.hero-photos img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;box-shadow:0 8px 22px rgba(122,63,68,.14)}
 .lead{font-size:1.18rem;color:var(--stone);line-height:1.65;margin:0 auto 28px;max-width:600px}
 .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 
@@ -142,6 +144,7 @@ footer a:hover{color:var(--blush);text-decoration:none}
   .navlinks a{font-size:1rem;padding:12px 14px}
   .navlinks a.callbtn{margin-top:10px;text-align:center}
   .hero{padding:60px 0 56px}
+  .hero-photos{gap:8px;margin-top:32px}
   section{padding:56px 0}
   .ctastrip{padding:40px 24px}
 }
