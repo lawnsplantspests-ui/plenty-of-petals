@@ -1,13 +1,42 @@
-These 25 photos are CORRUPT (truncated) and cannot be shown on the website.
+These 25 photos are CORRUPT (cut off partway) and cannot be shown on the website.
 
-What happened:
-  When they were copied off the phone/iCloud back in June, the transfer
-  was cut off partway, so only part of each photo made it to the computer.
-  The full originals should still be on your phone.
+They are NOT from the iPhone. The copies in ~/POP ("POP Website" and "Flowers")
+were checked on 2026-10-11:
 
-What to do:
-  Re-send the full-size original of each photo (AirDrop, email to yourself,
-  or download from iCloud), then hand them to Claude to drop into the
-  gallery. File names don't need to match.
+GOOD full copy found in ~/POP - these are now back on the site (gallery + articles):
+  - pink-rose-astilbe-bridesmaid-bouquets-2.jpeg
+      -> ~/POP/POP Website/Pink rose and pink astilibe bridesmaid bouquets (2).jpeg
+  - purple stock, purple roses, babies breath bridesmaid bouquets.JPG
+      -> ~/POP/Flowers/purple professional.jpg
+  - pink-rose-astilbe-bridesmaid-bouquet.jpeg
+      -> ~/POP/POP Website/Pink rose and pink astilibe bridesmaid bouquet.jpeg
 
+ALSO cut off in ~/POP (need the original from wherever it first came from:
+camera card, the photographer, an email, or a backup):
+  - White Wax Flower Boutonniere in Harrisburg.JPG  (same as 124B6940-CFB7-4CCB-895D-F4696B0C8565.JPG)
+  - pink-rose-loose-flowers-centerpiece.jpg  (same as pink rose loose flowers for centerpiece.JPG)
+  - pink rose and burgundy mum with greenery for sweetheart table in middletown.JPG  (same as IMG_6355.JPG)
+  - red-anemone-hypericum-bridesmaid-bouquets.jpg  (same as Red anenome and hypericum bridemaid bouquets.JPG)
+  - pink rose in a bullet made into boutonniere in harrisburg.JPG  (same as IMG_6347.JPG)
+  - red-rose-painted-blue-cascade-bouquet.jpg  (same as red rose and painted blue cascade bouquet.JPG)
+  - lilies and orange rose centerpiece in Harrisburg.JPG  (same as A33BF2A8-1740-46B7-826B-95E6F43EFC6B.JPG)
+  - pink sweetheart rose, burgundy mum corsage with blue ribbon in harrisburg.JPG  (same as IMG_6346.JPG)
+  - pink-rose-astilbe-bridesmaid-bouquets.jpeg  (same as Pink rose and pink astilibe bridesmaid bouquets.jpeg)
+
+NO copy found anywhere on this Mac:
+  - red sweethear rose, seeded eucalyptuc corsage with pink bow in middletown.JPG
+  - purple orchid and plumeria cascade bouquet.JPG
+  - blue hydranga, pink peonies, white rose, blue delphinium bouquet in middletown.JPG
+  - peak sweetheart rose, blue delphinium, queen annes lace centerpice in middletown.JPG
+  - floating candles with submerged babies breath centerpice in middletown.JPG
+  - pink rose and seeded eucalyptus boutonniere in middletown.JPG
+  - white lily cascade bouquet.JPG
+  - greenery decoration on railing in middletown.JPG
+  - greenery lining ceremont asile.JPG
+  - palm fern and loose orchid flowers on sweetheart table in middletown.JPG
+  - pom mum with babies breath boutonniere in middletown.JPG
+  - babies breath and greenery arbor in middletown.JPG
+  - sunflower, babies breath, wheat bouquet in middletown.JPG
+
+When you find full-size originals, hand them to Claude. File names don't need to match.
 This folder is NOT part of the live website - it's just a holding pile.
