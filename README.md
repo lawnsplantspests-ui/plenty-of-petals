@@ -24,3 +24,15 @@ Open `public/index.html` in a browser. No build needed.
 ## Deploy
 
 Push to `main` on the configured GitHub repo. Cloudflare picks it up.
+
+## Menu and footer
+
+The site menu and footer are written into every page, so search engines and
+AI crawlers see the links without running JavaScript. Edit them in
+`partials/header.html` and `partials/footer.html`, then run:
+
+    python3 tools/build_chrome.py
+
+That refreshes the copy in each page (between the `site-header` / `site-footer`
+markers). `public/components.js` now only loads analytics, the favicon, and
+highlights the current page in the menu.
