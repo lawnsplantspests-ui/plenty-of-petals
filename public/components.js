@@ -2,8 +2,12 @@
 // Usage: <script src="components.js"></script>
 
 (function () {
+  // Local previews (localhost) aren't real visitors — keep them out of the stats
+  var isLocal = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:';
+
   // Google Analytics 4 (gtag.js) — injected on every page
   (function () {
+    if (isLocal) return;
     var id = 'G-H0XHH6SBP1';
     var s = document.createElement('script');
     s.async = true;
