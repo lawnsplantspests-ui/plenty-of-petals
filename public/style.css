@@ -169,3 +169,11 @@ footer a:hover{color:var(--blush);text-decoration:none}
 .photo-strip.single{grid-template-columns:1fr;max-width:700px;margin-left:auto;margin-right:auto}
 .photo-strip.single img{height:360px}
 @media (max-width:640px){.photo-strip{grid-template-columns:1fr}.photo-strip img,.photo-strip.single img{height:240px}}
+
+/* Accessibility (2026-11-17): skip link, keyboard outline, reduced motion */
+.skip-link{position:absolute;left:12px;top:-80px;z-index:1000;background:var(--rose-deep);color:#fff;padding:10px 18px;border-radius:6px;font-weight:700;text-decoration:none}
+.skip-link:focus{top:12px;color:#fff}
+main:focus{outline:none}
+:focus-visible{outline:3px solid var(--rose-deep);outline-offset:2px}
+footer :focus-visible,.btn:focus-visible{outline-color:var(--blush)}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}}

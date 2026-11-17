@@ -1,7 +1,8 @@
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site"><div class="nav">
-<a href="/" class="brand"><img src="/images/pop-logo-192.jpg" alt="Plenty of Petals logo" class="brand-logo" /><span class="brand-text">Plenty of Petals<small>Wedding &amp; Event Florist &middot; Harrisburg, PA</small></span></a>
-<button class="menutoggle" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
-<nav class="navlinks" id="nav">
+<a href="/" class="brand"><img src="/images/pop-logo-192.jpg" width="192" height="192" alt="Plenty of Petals logo" class="brand-logo" /><span class="brand-text">Plenty of Petals<small>Wedding &amp; Event Florist &middot; Harrisburg, PA</small></span></a>
+<button class="menutoggle" aria-label="Menu" aria-expanded="false" aria-controls="nav" onclick="this.setAttribute('aria-expanded', document.getElementById('nav').classList.toggle('open'))">&#9776;</button>
+<nav class="navlinks" id="nav" aria-label="Main">
 <a href="/weddings" data-nav>Weddings</a>
 <a href="/events" data-nav>Events</a>
 <a href="/diy-wedding-flowers" data-nav>DIY Flowers</a>
